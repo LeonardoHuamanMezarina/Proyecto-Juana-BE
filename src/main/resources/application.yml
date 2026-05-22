@@ -1,0 +1,38 @@
+server:
+  port: 8086
+  error:
+    include-message: always
+
+spring:
+  application:
+    name: calendar-service
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://ep-icy-cloud-anu9v94b-pooler.c-6.us-east-1.aws.neon.tech/calendardb?sslmode=require&channel_binding=require}
+    username: ${SPRING_DATASOURCE_USERNAME:neondb_owner}
+    password: ${SPRING_DATASOURCE_PASSWORD:npg_sljYkGJve67x}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        physical_naming_strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+
+  # Deshabilitar Kafka temporalmente
+  kafka:
+    enabled: false
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration
+
+  # Configuración CORS
+  web:
+    cors:
+      allowed-origins: "http://localhost:4200"
+      allowed-methods: "*"
+      allowed-headers: "*"
+      allow-credentials: true
